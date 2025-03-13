@@ -1,0 +1,5 @@
+success,expectation_type,column,result,unexpected_count
+True,expect_column_values_to_not_be_null,enrollment_cnt,12,0
+
+success,expectation_type,column,result,unexpected_count
+True,expect_column_values_to_not_be_null,enrollment_cnt,12,0

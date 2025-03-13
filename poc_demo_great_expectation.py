@@ -68,30 +68,58 @@ results_data = {}
 
 for i,expectation in enumerate(expectations, start=1):
     validation_result = batch.validate(expectation)
-    print(validation_result)
+    validation_result.to_json_dict()
+    res_key = validation_result.keys()
+    res_val = validation_result.values()
+    #print(validation_result)
     
     validation_result_list = validation_result.to_json_dict()
     
+    # for key,value in validation_result_list.items():
+    #     try:
+    #         if key == 'success':
+    #                 results_data[f"success_{i}"] = value
+    #         elif key =='expectation_config' and isinstance(value, dict):
+    #                 results_data[f"expectation_type_{i}"] = value["type"]
+    #                 results_data[f"column_{i}"] = value["kwargs"]["column"]
+    #                 results_data[f"min_value_{i}"] = value["kwargs"]["min_value"]
+    #                 results_data[f"max_value_{i}"] = value["kwargs"]["max_value"]
+    #         elif key=='result' and isinstance(value, dict):
+    #                 results_data[f"result_{i}"] = value.get('element_count',None)
+    #                 results_data[f"unexpected_count_{i}"] = value.get('unexpected_count',None)
+    #                 results_data[f"observed_value_{i}"] = value.get('observed_value',None)
+    #     except:
+    #         pass
+
     for key,value in validation_result_list.items():
         try:
             if key == 'success':
-                    results_data[f"success_{i}"] = value
+                        results_data[f"success"] = value
             elif key =='expectation_config' and isinstance(value, dict):
-                    results_data[f"expectation_type_{i}"] = value["type"]
-                    results_data[f"column_{i}"] = value["kwargs"]["column"]
-                    results_data[f"min_value_{i}"] = value["kwargs"]["min_value"]
-                    results_data[f"max_value_{i}"] = value["kwargs"]["max_value"]
+                        results_data[f"expectation_type"] = value["type"]
+                        results_data[f"column"] = value["kwargs"]["column"]
+                        results_data[f"min_value"] = value["kwargs"]["min_value"]
+                        results_data[f"max_value"] = value["kwargs"]["max_value"]
             elif key=='result' and isinstance(value, dict):
-                    results_data[f"result_{i}"] = value.get('element_count',None)
-                    results_data[f"unexpected_count_{i}"] = value.get('unexpected_count',None)
-                    results_data[f"observed_value_{i}"] = value.get('observed_value',None)
+                        results_data[f"result"] = value.get('element_count',None)
+                        results_data[f"unexpected_count"] = value.get('unexpected_count',None)
+                        results_data[f"observed_value"] = value.get('observed_value',None)
         except:
             pass
 
-validation_df = pd.DataFrame([results_data])
+print(validation_result)
+print("------XXXX-----")
+# print(results_data)
+print(res_key)
+print("------XXXX-----")
+print(res_val)
 
-validation_df.to_csv("validation_result.csv",index=False)
-print(validation_df)
+# validation_df = pd.DataFrame([results_data])
+# validation_df.to_csv("validation_result.csv", header=True, sep=',', mode='a', index=False, encoding='utf-8')
+
+#validation_df.to_csv("validation_result.csv",index=False)
+# print(validation_df)
+
 
 # validation_df.to_excel("validation_result.xlsx",index=False, engine="openpyxl")
 # print(validation_df)
